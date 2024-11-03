@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Player : MonoBehaviour
 {
 
+    [SerializeField] TextMeshProUGUI textMeshProUGUI;
     [SerializeField] float mouseSensitivity = 200f; // чувствительность мыши
     float speedPlayer = 15.0f; // скорость игрока
     float xRotation = 0f;
@@ -110,8 +112,24 @@ public class Player : MonoBehaviour
             {
                 nameObj = hit.collider.name;
                 grabbedObj = hit.collider.gameObject;
-                youCanGrab = true;
+                if (grabbedObj.CompareTag("QR"))
+                {
+                    youCanGrab = true;
+                    textMeshProUGUI.text = "E - вз€ть";
+                }
                 Debug.Log("Objects: " + nameObj);
+            }
+        }
+        else
+        {
+            // —брасываем состо€ние, если луч не попал в объект
+            if (handsFree)
+            {
+                youCanGrab = false;
+                nameObj = null;
+                textMeshProUGUI.text = "";
+                //grabbedObj = null;
+                //Debug.Log("—брос объектов дл€ захвата");
             }
         }
     }
@@ -123,6 +141,7 @@ public class Player : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked; // —крываем и блокируем курсор мыши
         transCamera = transform.GetChild(0);
         grabPoint = transCamera.GetChild(0);
+        textMeshProUGUI.text = "";
     }
 
     void gragPlayer()
@@ -138,6 +157,7 @@ public class Player : MonoBehaviour
             youCanGrab = false;
             handsFree = false;
             nameObj = null;
+            textMeshProUGUI.text = "E - положить";
         }
         else if (!youCanGrab && !handsFree)
         {
@@ -145,9 +165,10 @@ public class Player : MonoBehaviour
             grabbedObjRig.isKinematic = false;
             grabbedObj.transform.SetParent(null);
             grabbedObjRig = null;
-            nameObj = "grabEnd";
+            nameObj = null;
             handsFree = true;
             youCanGrab = false;
+            textMeshProUGUI.text = "";
         }
     }
 }

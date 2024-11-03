@@ -11,6 +11,7 @@ public class GeneratorQR : MonoBehaviour
     [SerializeField] TMP_InputField inputField;
     string textQR;
     bool generatorOn = false;
+    int namePrefix = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +32,11 @@ public class GeneratorQR : MonoBehaviour
         GameObject boxQR = qr.transform.GetChild(0).gameObject;
         GameObject qrCode = boxQR.transform.GetChild(0).gameObject;
         qrCode.GetComponent<QRCode>().InIt(inputField.text);
+
+        // уникальное имя
+        namePrefix++;
+        string tmp = boxQR.name + namePrefix.ToString();
+        boxQR.name = tmp;
     }
 
     private void OnTriggerEnter(Collider other)

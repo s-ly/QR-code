@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 9219589553173211197}
   m_Layer: 0
   m_Name: BoxQR
-  m_TagString: Untagged
+  m_TagString: QR
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
