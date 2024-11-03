@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
     Rigidbody grabbedObjRig; // Rigidbody выбранного объекта
     public bool handsFree = true; // руки свободны
     public bool youCanGrab = false; // можно брать
+    bool CursorModeLock = true;
 
     // Start is called before the first frame update
     void Start()
@@ -56,6 +57,11 @@ public class Player : MonoBehaviour
         {
             rigPlayer.AddForce(-transform.right * -speedPlayer);
         }
+
+        //if (Input.GetKey(KeyCode.N))
+        //{
+        //    Cursor.lockState = CursorLockMode.None;
+        //}
     }
 
     void Control()
@@ -77,8 +83,22 @@ public class Player : MonoBehaviour
         {
             gragPlayer();
         }
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            if (!CursorModeLock)
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                CursorModeLock = true;
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.None;
+                CursorModeLock = false;
+            }
+        }
     }
-    
+
     void RayPlayer()
     {
         Ray ray = new Ray(transCamera.position, transCamera.forward);
@@ -95,7 +115,7 @@ public class Player : MonoBehaviour
             }
         }
     }
-    
+
     void InItPlayer()
     {
         rigPlayer = GetComponent<Rigidbody>();

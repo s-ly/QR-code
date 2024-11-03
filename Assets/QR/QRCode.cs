@@ -10,7 +10,7 @@ public class QRCode : MonoBehaviour
 
     void Start()
     {
-        GenerateQRCode();
+
     }
 
     void GenerateQRCode()
@@ -41,5 +41,11 @@ public class QRCode : MonoBehaviour
         {
             renderer.material.mainTexture = tex;
         }
+    }
+
+    public void InIt(string text)
+    {
+        qrCodeText = text;
+        GenerateQRCode();
     }
 }
