@@ -22,6 +22,9 @@ public class Player : MonoBehaviour
     public bool handsFree = true; // руки свободны
     public bool youCanGrab = false; // можно брать
     bool CursorModeLock = true;
+    public Vector3 rayTarget = Vector3.zero;
+    public bool targetRulerPoint = false;
+    public bool targetRulerPointB = false;
 
     // Start is called before the first frame update
     void Start()
@@ -99,6 +102,15 @@ public class Player : MonoBehaviour
                 CursorModeLock = false;
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            targetRulerPoint = !targetRulerPoint;
+        }
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            targetRulerPointB = !targetRulerPointB;
+        }
     }
 
     void RayPlayer()
@@ -116,9 +128,21 @@ public class Player : MonoBehaviour
                 {
                     youCanGrab = true;
                     textMeshProUGUI.text = "E - взять";
-                }
                 Debug.Log("Objects: " + nameObj);
+                }
+                else
+                {
+                    Debug.Log("NO GRAB Objects: " + nameObj);
+                    youCanGrab = false;
+                    //nameObj = null;
+                    textMeshProUGUI.text = "";
+                }
             }
+
+            // точка падения луча
+            rayTarget = hit.point;
+            // рисует лучь для Debug
+            Debug.DrawRay(transCamera.position, transCamera.forward * hit.distance, Color.red);
         }
         else
         {
@@ -154,6 +178,7 @@ public class Player : MonoBehaviour
             grabbedObj.transform.SetParent(grabPoint);
             grabbedObj.transform.localPosition = Vector3.zero;
             grabbedObj.transform.localRotation = Quaternion.identity;
+            grabbedObj.transform.localRotation = Quaternion.Euler(10, 0, 0); // Наклон по оси X на 10 градусов
             youCanGrab = false;
             handsFree = false;
             nameObj = null;
