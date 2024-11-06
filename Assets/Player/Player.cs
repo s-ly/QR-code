@@ -183,6 +183,11 @@ public class Player : MonoBehaviour
             handsFree = false;
             nameObj = null;
             textMeshProUGUI.text = "E - положить";
+
+            QRCode QRObjScript = grabbedObj.GetComponentInChildren<QRCode>();
+            QRObjScript.taken = true;
+            QRObjScript.onTable = false;
+
         }
         else if (!youCanGrab && !handsFree)
         {
@@ -194,6 +199,9 @@ public class Player : MonoBehaviour
             handsFree = true;
             youCanGrab = false;
             textMeshProUGUI.text = "";
+
+            QRCode QRObjScript = grabbedObj.GetComponentInChildren<QRCode>();
+            QRObjScript.taken = false;
         }
     }
 }

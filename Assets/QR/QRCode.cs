@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using ZXing;
 using ZXing.QrCode;
@@ -7,6 +8,8 @@ public class QRCode : MonoBehaviour
     public string qrCodeText = "Hello, QR Code!";
     public int width = 256;
     public int height = 256;
+    public bool taken = false; // qr взят в руки
+    public bool onTable = false; // лежит на столе
 
     void Start()
     {
